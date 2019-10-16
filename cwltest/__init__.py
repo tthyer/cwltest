@@ -59,7 +59,11 @@ def prepare_test_command(tool,          # type: str
         for testarg in testargs:
             (test_case_name, prefix) = testarg.split('==')
             if test_case_name in test:
-                test_command.extend([prefix, test[test_case_name]])
+                test_case_value = test[test_case_name]
+                if str(test_case_value).lower() == 'true':
+                    test_command.extend([prefix])
+                else:
+                    test_command.extend([prefix, test[test_case_name]])
 
     # Add prefixes if running on MacOSX so that boot2docker writes to /Users
     with templock:
